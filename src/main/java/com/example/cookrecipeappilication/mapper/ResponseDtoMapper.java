@@ -1,4 +1,4 @@
-package mate.academy.springboot.swagger.mapper;
+package com.example.cookrecipeappilication.mapper;
 
 public interface ResponseDtoMapper<D, T> {
     D mapToDto(T model);
