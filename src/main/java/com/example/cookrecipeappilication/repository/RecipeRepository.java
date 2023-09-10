@@ -1,7 +1,6 @@
 package com.example.cookrecipeappilication.repository;
 
 import com.example.cookrecipeappilication.model.Recipe;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
