@@ -1,9 +1,8 @@
 package com.example.cookrecipeappilication.util;
 
-import org.springframework.data.domain.Sort;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.domain.Sort;
 
 public class SortUtils {
     public static Sort createSort(String sortBy) {

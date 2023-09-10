@@ -46,7 +46,6 @@ public class RecipeServiceImpl implements RecipeService {
         recipeRepository.deleteById(id);
     }
 
-
     public List<Recipe> getAllRecipes(PageRequest pageRequest) {
         return recipeRepository.findAllByOrderByDescriptionAsc(pageRequest);
     }

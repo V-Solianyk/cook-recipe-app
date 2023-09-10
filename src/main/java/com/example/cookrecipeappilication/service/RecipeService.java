@@ -1,10 +1,9 @@
 package com.example.cookrecipeappilication.service;
 
 import com.example.cookrecipeappilication.model.Recipe;
-import org.springframework.data.domain.PageRequest;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
 
 public interface RecipeService {
     Recipe save(Recipe recipe);
