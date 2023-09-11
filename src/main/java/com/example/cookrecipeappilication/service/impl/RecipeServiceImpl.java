@@ -5,7 +5,7 @@ import com.example.cookrecipeappilication.model.RecipeVersion;
 import com.example.cookrecipeappilication.repository.RecipeRepository;
 import com.example.cookrecipeappilication.repository.RecipeVersionRepository;
 import com.example.cookrecipeappilication.service.RecipeService;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
@@ -46,15 +46,11 @@ public class RecipeServiceImpl implements RecipeService {
         recipeRepository.deleteById(id);
     }
 
-    public List<Recipe> getAllRecipes(PageRequest pageRequest) {
-        return recipeRepository.findAllByOrderByDescriptionAsc(pageRequest);
-    }
-
     @Override
     public List<Recipe> getAllByCreatedDateAndDescription(
-            LocalDateTime createdDate, String description, PageRequest pageRequest) {
+            LocalDate createdDate, String description, PageRequest pageRequest) {
         return recipeRepository.findRecipesByCreatedDateAndDescriptionContainsAndSorted(
-                createdDate, description, pageRequest);
+                createdDate.atStartOfDay(), description, pageRequest);
     }
 
     private void createRecipeVersion(Recipe recipe) {
