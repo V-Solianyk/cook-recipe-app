@@ -1,7 +1,7 @@
 package com.example.cookrecipeappilication.service;
 
 import com.example.cookrecipeappilication.model.Recipe;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 
@@ -14,8 +14,6 @@ public interface RecipeService {
 
     void delete(Long id);
 
-    List<Recipe> getAllRecipes(PageRequest pageRequest);
-
-    List<Recipe> getAllByCreatedDateAndDescription(LocalDateTime createdDate,
+    List<Recipe> getAllByCreatedDateAndDescription(LocalDate createdDate,
                                                    String description, PageRequest pageRequest);
 }

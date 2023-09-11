@@ -17,6 +17,4 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
             @Param("createdDate") LocalDateTime createdDate,
             @Param("description") String description,
             Pageable pageable);
-
-    List<Recipe> findAllByOrderByDescriptionAsc(Pageable pageable);
 }

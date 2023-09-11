@@ -10,7 +10,7 @@ import com.example.cookrecipeappilication.model.RecipeVersion;
 import com.example.cookrecipeappilication.service.RecipeService;
 import com.example.cookrecipeappilication.service.RecipeVersionService;
 import com.example.cookrecipeappilication.util.SortUtils;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/recipes")
 @RequiredArgsConstructor
 public class RecipeController {
+    private static final String DEFAULT_CREATED_DATE = "1970-01-01";
     private final RecipeService recipeService;
     private final RecipeVersionService recipeVersionService;
     private final ResponseDtoMapper<RecipeResponseDto, Recipe> recipeResponseDtoMapper;
@@ -44,7 +45,7 @@ public class RecipeController {
     }
 
     @PostMapping("/{parentId}")
-    public RecipeResponseDto create(@RequestBody RecipeRequestDto recipeRequestDto,
+    public RecipeResponseDto createNewVersion(@RequestBody RecipeRequestDto recipeRequestDto,
                                     @PathVariable Long parentId) {
         Recipe recipe = recipeRequestDtoMapper.mapToModel(recipeRequestDto);
         recipe.setRecipeParent(recipeService.get(parentId));
@@ -71,16 +72,6 @@ public class RecipeController {
         return recipeResponseDtoMapper.mapToDto(recipe);
     }
 
-    @GetMapping()
-    public List<RecipeResponseDto> getAllRecipes(@RequestParam(defaultValue = "10") Integer count,
-                                                 @RequestParam(defaultValue = "0") Integer page) {
-        PageRequest pageRequest = PageRequest.of(page, count);
-        List<Recipe> recipes = recipeService.getAllRecipes(pageRequest);
-        return recipes.stream()
-                .map(recipeResponseDtoMapper::mapToDto)
-                .collect(Collectors.toList());
-    }
-
     @GetMapping("/versions/{id}")
     public List<RecipeVersionResponseDto> getAllPreviousRecipeVersions(
             @PathVariable Long id, @RequestParam(defaultValue = "10") Integer count,
@@ -100,8 +91,8 @@ public class RecipeController {
             @RequestParam(defaultValue = "10") Integer count,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "description") String sortBy,
-            @RequestParam LocalDateTime createdDate,
-            @RequestParam(defaultValue = "potato") String description) {
+            @RequestParam(defaultValue = DEFAULT_CREATED_DATE) LocalDate createdDate,
+            @RequestParam(defaultValue = "") String description) {
         Sort sort = SortUtils.createSort(sortBy);
         PageRequest pageRequest = PageRequest.of(page, count, sort);
         List<Recipe> recipes = recipeService.getAllByCreatedDateAndDescription(
