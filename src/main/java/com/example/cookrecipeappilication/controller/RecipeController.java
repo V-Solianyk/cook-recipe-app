@@ -45,7 +45,7 @@ public class RecipeController {
     }
 
     @PostMapping("/{parentId}")
-    public RecipeResponseDto createNewVersion(@RequestBody RecipeRequestDto recipeRequestDto,
+    public RecipeResponseDto createNewRecipeByParent(@RequestBody RecipeRequestDto recipeRequestDto,
                                     @PathVariable Long parentId) {
         Recipe recipe = recipeRequestDtoMapper.mapToModel(recipeRequestDto);
         recipe.setRecipeParent(recipeService.get(parentId));
@@ -90,11 +90,9 @@ public class RecipeController {
     public List<RecipeResponseDto> getAllByDateAndDescription(
             @RequestParam(defaultValue = "10") Integer count,
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "description") String sortBy,
             @RequestParam(defaultValue = DEFAULT_CREATED_DATE) LocalDate createdDate,
             @RequestParam(defaultValue = "") String description) {
-        Sort sort = SortUtils.createSort(sortBy);
-        PageRequest pageRequest = PageRequest.of(page, count, sort);
+        PageRequest pageRequest = PageRequest.of(page, count);
         List<Recipe> recipes = recipeService.getAllByCreatedDateAndDescription(
                 createdDate, description, pageRequest);
         return recipes.stream()
