@@ -3,11 +3,12 @@ package com.example.cookrecipeappilication.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
-import com.example.cookrecipeappilication.dto.RecipeRequestDto;
+import com.example.cookrecipeappilication.dto.request.RecipeRequestDto;
 import com.example.cookrecipeappilication.dto.RecipeResponseDto;
 import com.example.cookrecipeappilication.dto.RecipeVersionResponseDto;
-import com.example.cookrecipeappilication.mapper.RequestDtoMapper;
-import com.example.cookrecipeappilication.mapper.ResponseDtoMapper;
+import com.example.cookrecipeappilication.mapper.RecipeRequestDtoMapper;
+import com.example.cookrecipeappilication.mapper.RecipeResponseDtoMapper;
+import com.example.cookrecipeappilication.mapper.RecipeVersionResponseDtoMapper;
 import com.example.cookrecipeappilication.model.Recipe;
 import com.example.cookrecipeappilication.model.RecipeVersion;
 import com.example.cookrecipeappilication.service.RecipeService;
@@ -23,9 +24,9 @@ import org.springframework.data.domain.Sort;
 class RecipeControllerTest {
     private RecipeVersionService recipeVersionService;
     private RecipeService recipeService;
-    private ResponseDtoMapper<RecipeResponseDto, Recipe> recipeResponseDtoMapper;
-    private RequestDtoMapper<RecipeRequestDto, Recipe> recipeRequestDtoMapper;
-    private ResponseDtoMapper<RecipeVersionResponseDto, RecipeVersion> versionResponseDtoMapper;
+    private RecipeRequestDtoMapper recipeRequestDtoMapper;
+    private RecipeResponseDtoMapper recipeResponseDtoMapper;
+    private RecipeVersionResponseDtoMapper recipeVersionResponseDtoMapper;
     private RecipeController recipeController;
     private RecipeRequestDto recipeRequestDto;
     private Recipe recipe;
@@ -35,11 +36,11 @@ class RecipeControllerTest {
     void setUp() {
         recipeService = Mockito.mock(RecipeService.class);
         recipeVersionService = Mockito.mock(RecipeVersionService.class);
-        recipeResponseDtoMapper = Mockito.mock(ResponseDtoMapper.class);
-        recipeRequestDtoMapper = Mockito.mock(RequestDtoMapper.class);
-        versionResponseDtoMapper = Mockito.mock(ResponseDtoMapper.class);
+        recipeResponseDtoMapper = Mockito.mock(RecipeResponseDtoMapper.class);
+        recipeRequestDtoMapper = Mockito.mock(RecipeRequestDtoMapper.class);
+        recipeVersionResponseDtoMapper = Mockito.mock(RecipeVersionResponseDtoMapper.class);
         recipeController = new RecipeController(recipeService, recipeVersionService,
-                recipeResponseDtoMapper, recipeRequestDtoMapper, versionResponseDtoMapper);
+                recipeRequestDtoMapper, recipeResponseDtoMapper, recipeVersionResponseDtoMapper);
         recipeRequestDto = new RecipeRequestDto();
         recipe = new Recipe();
         recipe.setId(1L);
@@ -113,9 +114,9 @@ class RecipeControllerTest {
                 .of(new RecipeVersionResponseDto(), new RecipeVersionResponseDto());
         when(recipeVersionService.getAllRecipeVersionsByRecipeId(id, pageRequest))
                 .thenReturn(recipeVersions);
-        when(versionResponseDtoMapper.mapToDto(firstVersion))
+        when(recipeVersionResponseDtoMapper.mapToDto(firstVersion))
                 .thenReturn(recipeVersionsResponseDto.get(0));
-        when(versionResponseDtoMapper.mapToDto(secondVersion))
+        when(recipeVersionResponseDtoMapper.mapToDto(secondVersion))
                 .thenReturn(recipeVersionsResponseDto.get(1));
         List<RecipeVersionResponseDto> result = recipeController
                 .getAllPreviousRecipeVersions(id, 10, 0, sortBy);
