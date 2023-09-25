@@ -1,10 +1,11 @@
 package com.example.cookrecipeappilication.controller;
 
-import com.example.cookrecipeappilication.dto.RecipeRequestDto;
+import com.example.cookrecipeappilication.dto.request.RecipeRequestDto;
 import com.example.cookrecipeappilication.dto.RecipeResponseDto;
 import com.example.cookrecipeappilication.dto.RecipeVersionResponseDto;
-import com.example.cookrecipeappilication.mapper.RequestDtoMapper;
-import com.example.cookrecipeappilication.mapper.ResponseDtoMapper;
+import com.example.cookrecipeappilication.mapper.RecipeRequestDtoMapper;
+import com.example.cookrecipeappilication.mapper.RecipeResponseDtoMapper;
+import com.example.cookrecipeappilication.mapper.RecipeVersionResponseDtoMapper;
 import com.example.cookrecipeappilication.model.Recipe;
 import com.example.cookrecipeappilication.model.RecipeVersion;
 import com.example.cookrecipeappilication.service.RecipeService;
@@ -33,10 +34,9 @@ public class RecipeController {
     private static final String DEFAULT_CREATED_DATE = "1970-01-01";
     private final RecipeService recipeService;
     private final RecipeVersionService recipeVersionService;
-    private final ResponseDtoMapper<RecipeResponseDto, Recipe> recipeResponseDtoMapper;
-    private final RequestDtoMapper<RecipeRequestDto, Recipe> recipeRequestDtoMapper;
-    private final ResponseDtoMapper<RecipeVersionResponseDto,
-            RecipeVersion> recipeVersionResponseDtoMapper;
+    private final RecipeRequestDtoMapper recipeRequestDtoMapper;
+    private final RecipeResponseDtoMapper recipeResponseDtoMapper;
+    private final RecipeVersionResponseDtoMapper recipeVersionResponseDtoMapper;
 
     @PostMapping
     public RecipeResponseDto create(@RequestBody RecipeRequestDto recipeRequestDto) {
@@ -46,7 +46,7 @@ public class RecipeController {
 
     @PostMapping("/{parentId}")
     public RecipeResponseDto createNewRecipeByParent(@RequestBody RecipeRequestDto recipeRequestDto,
-                                    @PathVariable Long parentId) {
+                                                     @PathVariable Long parentId) {
         Recipe recipe = recipeRequestDtoMapper.mapToModel(recipeRequestDto);
         recipe.setRecipeParent(recipeService.get(parentId));
         Recipe recipeResult = recipeService.save(recipe);
