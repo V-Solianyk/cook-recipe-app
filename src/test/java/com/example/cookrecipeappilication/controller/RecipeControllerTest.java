@@ -3,9 +3,10 @@ package com.example.cookrecipeappilication.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
+
 import com.example.cookrecipeappilication.dto.request.RecipeRequestDto;
-import com.example.cookrecipeappilication.dto.RecipeResponseDto;
-import com.example.cookrecipeappilication.dto.RecipeVersionResponseDto;
+import com.example.cookrecipeappilication.dto.response.RecipeResponseDto;
+import com.example.cookrecipeappilication.dto.response.RecipeVersionResponseDto;
 import com.example.cookrecipeappilication.mapper.RecipeRequestDtoMapper;
 import com.example.cookrecipeappilication.mapper.RecipeResponseDtoMapper;
 import com.example.cookrecipeappilication.mapper.RecipeVersionResponseDtoMapper;
@@ -66,7 +67,8 @@ class RecipeControllerTest {
         when(recipeService.get(parentId)).thenReturn(parentRecipe);
         when(recipeService.save(recipe)).thenReturn(recipe);
         when(recipeResponseDtoMapper.mapToDto(recipe)).thenReturn(recipeResponseDto);
-        RecipeResponseDto result = recipeController.createNewRecipeByParent(recipeRequestDto, parentId);
+        RecipeResponseDto result = recipeController.createNewRecipeByParent(recipeRequestDto,
+                parentId);
         assertNotNull(result);
         assertEquals(recipeResponseDto, result);
     }
@@ -127,8 +129,8 @@ class RecipeControllerTest {
 
     @Test
     void getAllByDateAndDescription_ok() {
-        LocalDate createdDate = LocalDate.of(2023, 9, 10);
-        String description = "potato";
+        final LocalDate createdDate = LocalDate.of(2023, 9, 10);
+        final String description = "potato";
         recipe.setDescription("potato");
         Recipe recipe2 = new Recipe();
         recipe2.setId(2L);
@@ -136,8 +138,8 @@ class RecipeControllerTest {
         Recipe recipe3 = new Recipe();
         recipe3.setId(3L);
         recipe3.setDescription("potato with meat");
-        PageRequest pageRequest = PageRequest.of(0, 10);
-        List<Recipe> recipeList = List.of(recipe, recipe3);
+        final PageRequest pageRequest = PageRequest.of(0, 10);
+        final List<Recipe> recipeList = List.of(recipe, recipe3);
         RecipeResponseDto responseDto1 = new RecipeResponseDto();
         responseDto1.setId(recipe.getId());
         responseDto1.setDescription(recipe.getDescription());

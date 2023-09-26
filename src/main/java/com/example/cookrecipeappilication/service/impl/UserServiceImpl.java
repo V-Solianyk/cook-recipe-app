@@ -18,18 +18,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserRole(Long userId, User.Role newRole) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user != null) {
-            user.setRole(newRole);
-            return userRepository.save(user);
-        }
-        return null;
+    public User updateUserRole(Long userId, String role) {
+        String newRole = checkInput(role);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("Can't find user by id:" + userId));
+        user.setRole(User.Role.valueOf(newRole));
+        return userRepository.save(user);
     }
 
     @Override
     public User getByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new NoSuchElementException("Can't find user by email:" + email));
+                .orElseThrow(() -> new NoSuchElementException("Can't find user by"
+                        + " email:" + email));
+    }
+
+    private String checkInput(String userRole) {
+        if (userRole == null || userRole.isBlank()) {
+            throw new RuntimeException("The role name cannot be empty.");
+        }
+        String role = userRole.toUpperCase();
+        if (!role.equals(User.Role.MANAGER.name()) && !role
+                .equals(User.Role.CUSTOMER.name())) {
+            throw new RuntimeException("The role name is only possible CUSTOMER or MANAGER.");
+        }
+        return role;
     }
 }

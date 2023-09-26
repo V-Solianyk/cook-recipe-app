@@ -1,4 +1,4 @@
-package com.example.cookrecipeappilication.dto;
+package com.example.cookrecipeappilication.dto.response;
 
 import java.time.LocalDateTime;
 import lombok.Getter;

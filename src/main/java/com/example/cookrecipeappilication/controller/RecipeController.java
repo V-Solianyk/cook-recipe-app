@@ -1,8 +1,8 @@
 package com.example.cookrecipeappilication.controller;
 
 import com.example.cookrecipeappilication.dto.request.RecipeRequestDto;
-import com.example.cookrecipeappilication.dto.RecipeResponseDto;
-import com.example.cookrecipeappilication.dto.RecipeVersionResponseDto;
+import com.example.cookrecipeappilication.dto.response.RecipeResponseDto;
+import com.example.cookrecipeappilication.dto.response.RecipeVersionResponseDto;
 import com.example.cookrecipeappilication.mapper.RecipeRequestDtoMapper;
 import com.example.cookrecipeappilication.mapper.RecipeResponseDtoMapper;
 import com.example.cookrecipeappilication.mapper.RecipeVersionResponseDtoMapper;

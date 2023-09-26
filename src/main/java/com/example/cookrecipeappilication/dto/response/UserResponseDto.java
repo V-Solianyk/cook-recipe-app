@@ -1,4 +1,4 @@
-package com.example.cookrecipeappilication.dto;
+package com.example.cookrecipeappilication.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
