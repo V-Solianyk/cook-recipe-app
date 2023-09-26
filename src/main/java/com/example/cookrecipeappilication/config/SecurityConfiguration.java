@@ -1,6 +1,7 @@
 package com.example.cookrecipeappilication.config;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 import com.example.cookrecipeappilication.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,17 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, "/register", "/login")
                         .permitAll()
-                        //todo налаштувати потрібні ендпоїнти
+                        .requestMatchers(HttpMethod.POST, "/recipes").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.POST, "/recipes/{parentId}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, "/recipes/{id}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/recipes/{id}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/recipes/{id}")
+                        .hasAnyRole("MANAGER", "CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/recipes/versions/{id}")
+                        .hasAnyRole("MANAGER", "CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/recipes/by-date-and-description")
+                        .hasAnyRole("MANAGER", "CUSTOMER")
+                        .requestMatchers(HttpMethod.PATCH, "/users/{id}").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/auth/**",
                                 "/v3/api-docs/**", "/v3/api-docs.yaml",

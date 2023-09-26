@@ -1,8 +1,7 @@
 package com.example.cookrecipeappilication.security;
 
-
-import com.example.cookrecipeappilication.service.UserService;
 import com.example.cookrecipeappilication.model.User;
+import com.example.cookrecipeappilication.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -2,6 +2,7 @@ package com.example.cookrecipeappilication.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+
 import com.example.cookrecipeappilication.model.Recipe;
 import com.example.cookrecipeappilication.model.RecipeVersion;
 import com.example.cookrecipeappilication.repository.RecipeVersionRepository;
@@ -42,7 +43,7 @@ class RecipeVersionServiceTest {
 
     @Test
     void getAllRecipeVersionsByRecipeId() {
-        PageRequest pageRequest = PageRequest.of(0, 10);
+        final PageRequest pageRequest = PageRequest.of(0, 10);
         RecipeVersion firstRecipeVersion = new RecipeVersion();
         firstRecipeVersion.setRecipe(recipe);
         firstRecipeVersion.setDescription(DESCRIPTION);

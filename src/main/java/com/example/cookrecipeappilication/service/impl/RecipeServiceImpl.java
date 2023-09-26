@@ -60,7 +60,7 @@ public class RecipeServiceImpl implements RecipeService {
         versionRepository.save(recipeVersion);
     }
 
-    private static void checkDescription(Recipe recipe) {
+    private void checkDescription(Recipe recipe) {
         if (recipe.getDescription() == null || recipe.getDescription().isBlank()) {
             throw new IllegalArgumentException("The field description can't be null or empty");
         }

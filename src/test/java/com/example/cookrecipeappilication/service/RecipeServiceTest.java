@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import com.example.cookrecipeappilication.model.Recipe;
 import com.example.cookrecipeappilication.model.RecipeVersion;
 import com.example.cookrecipeappilication.repository.RecipeRepository;
@@ -114,7 +115,8 @@ class RecipeServiceTest {
                 any(LocalDateTime.class), eq(description), eq(pageRequest)))
                 .thenReturn(List.of(firstTestRecipe, secondTestRecipe));
 
-        List<Recipe> recipes = recipeService.getAllByCreatedDateAndDescription(createdDate, description, pageRequest);
+        List<Recipe> recipes = recipeService.getAllByCreatedDateAndDescription(createdDate,
+                description, pageRequest);
         assertEquals(2, recipes.size());
     }
 
@@ -127,7 +129,8 @@ class RecipeServiceTest {
                 any(LocalDateTime.class), eq(description), eq(pageRequest)))
                 .thenReturn(List.of(secondTestRecipe));
 
-        List<Recipe> recipes = recipeService.getAllByCreatedDateAndDescription(createdDate, description, pageRequest);
+        List<Recipe> recipes = recipeService.getAllByCreatedDateAndDescription(createdDate,
+                description, pageRequest);
         assertEquals(1, recipes.size());
         assertTrue(recipes.get(0).getDescription().contains(description));
     }
@@ -135,7 +138,7 @@ class RecipeServiceTest {
     @Test
     public void testGetAllByCreatedDateAndDescription_ok() {
         String description = "Meat";
-        LocalDate fromThisCreatedDate = LocalDate.of(2020, 9, 10);
+        final LocalDate fromThisCreatedDate = LocalDate.of(2020, 9, 10);
         firstTestRecipe.setCreatedDate(LocalDateTime.of(2010, 9, 10,
                 11, 54, 25));
         secondTestRecipe.setCreatedDate(LocalDateTime.of(2021, 9, 10,
@@ -145,7 +148,8 @@ class RecipeServiceTest {
                 any(LocalDateTime.class), eq(description), eq(pageRequest)))
                 .thenReturn(List.of(secondTestRecipe));
 
-        List<Recipe> recipes = recipeService.getAllByCreatedDateAndDescription(fromThisCreatedDate, description, pageRequest);
+        List<Recipe> recipes = recipeService.getAllByCreatedDateAndDescription(fromThisCreatedDate,
+                description, pageRequest);
         assertEquals(1, recipes.size());
         assertTrue(recipes.get(0).getDescription().contains(description));
         assertTrue(recipes.get(0).getCreatedDate().isAfter(fromThisCreatedDate.atStartOfDay()));
