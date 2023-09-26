@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     public User updateUserRole(Long userId, String role) {
         String newRole = checkInput(role);
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("Can't find user by id:" + userId));
+                .orElseThrow(() -> new NoSuchElementException("Can't find user by id: " + userId));
         user.setRole(User.Role.valueOf(newRole));
         return userRepository.save(user);
     }
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new NoSuchElementException("Can't find user by"
-                        + " email:" + email));
+                        + " email: " + email));
     }
 
     private String checkInput(String userRole) {
