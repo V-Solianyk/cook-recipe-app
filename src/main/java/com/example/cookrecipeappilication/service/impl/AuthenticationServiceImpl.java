@@ -37,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtAuthenticationResponseDto login(UserLoginRequestDto request) {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("The user doesn't exist by"
-                        + " this email" + request.getEmail()));
+                        + " this email: " + request.getEmail()));
         checkPassword(request, user);
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponseDto.builder().token(jwt).build();
